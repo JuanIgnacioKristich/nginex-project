@@ -1,0 +1,34 @@
+services:
+
+  express_app:
+    build:
+      context: https://github.com/dqmdz/express_basic_api.git
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - app_network
+
+  react_app:
+    build:
+      context: https://github.com/dqmdz/react-basic-client.git
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - express_app
+    networks:
+      - app_network
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    links:
+      - express_app
+      - react_app
+    restart: always
+    networks:
+      - app_network
+
+networks:
+  app_network:
+
