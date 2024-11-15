@@ -23,8 +23,8 @@ services:
     ports:
       - "80:80"
     links:
-      - express_app
-      - react_app
+      - backend
+      - frontend
     restart: always
     networks:
       - app_network
